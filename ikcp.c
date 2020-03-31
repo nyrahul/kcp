@@ -1046,7 +1046,7 @@ void ikcp_flush(ikcpcb *kcp)
 	rtomin = (kcp->nodelay == 0)? (kcp->rx_rto >> 3) : 0;
 
 	// flush data segments
-	for (p = kcp->snd_buf.next; p != &kcp->snd_buf; p = p->next) {
+	for (p = kcp->snd_buf.next; p && p != &kcp->snd_buf; p = p->next) {
 		IKCPSEG *segment = iqueue_entry(p, IKCPSEG, node);
 		int needsend = 0;
 		if (segment->xmit == 0) {
